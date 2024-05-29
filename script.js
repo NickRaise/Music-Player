@@ -151,6 +151,19 @@ async function main() {
 
 
 
+  // event lister for hamberger
+  document.querySelector(".hamberger").addEventListener("click", () => {
+    document.querySelector(".left").style.left = 0;
+  })
+
+
+// eventlistner for close btn
+  document.querySelector(".close-icon").addEventListener("click", () => {
+    document.querySelector(".left").style.left = "-100%";
+  })
+
+
+
 
 }
 

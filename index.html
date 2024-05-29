@@ -13,6 +13,7 @@
     <div class="container flex bg-black">
       <div class="left direction-col">
         <div class="left-container">
+          <img class="invert-color close-icon" src="Resources/close.svg" alt="close icon">
           <div class="home bg-grey rounded m-2 p-4">
             <a href="#"
               ><img
@@ -108,7 +109,8 @@
       <div class="right bg-grey rounded">
         <div class="right-container">
           <div class="header justify-space-between p-3">
-            <div class="nav">
+            <div class="nav flex item-center">
+              <img src="Resources/hamberger.svg" class="invert-color hamberger" alt="">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -178,19 +180,43 @@
                 <br />
                 <p>Filled with upbeat rhythms and empowering lyrics</p>
               </div>
+              <div class="card rounded p-2 m-2">
+                <div class="play">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 36 36"
+                    width="50"
+                    height="50"
+                    fill="#000000"
+                  >
+                    <circle cx="18" cy="18" r="15" fill="#00FF00" />
+                    <path
+                      d="M23.625 18L14.625 12.75V23.25L23.625 18Z"
+                      fill="black"
+                    />
+                  </svg>
+                </div>
+                <img
+                  src="https://www.shutterstock.com/shutterstock/photos/701307613/display_1500/stock-vector-music-notes-song-melody-or-tune-flat-vector-icon-for-musical-apps-and-websites-701307613.jpg"
+                  alt="playlist image"
+                />
+                <h2>Fuel Your Fire</h2>
+                <br />
+                <p>Filled with upbeat rhythms and empowering lyrics</p>
+              </div>
             </div>
             
           </div>
-          <div class="play-bar p-2">
+          <div class="play-bar p-2 flex">
             <div class="seek-bar">
               <div class="circle">
   
               </div>
             </div>
-            <div class="above-bar justify-space-between">
+            <div class="above-bar justify-space-between item-center">
               <div class="song-info">Dynasty - MIIA
               </div>
-              <div class="song-buttons justify-center">
+              <div class="song-buttons justify-center g-2">
                 <img class="previous" src="Resources/prev.svg" alt="prev button" />
                 <img
                   id="playButton"
