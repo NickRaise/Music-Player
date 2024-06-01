@@ -7,8 +7,8 @@ function secondsToMinutesSeconds(seconds) {
   let remainingSeconds = Math.floor(seconds % 60); // Remove any decimal part
 
   // Format the output with leading zeros if necessary
-  let minutesStr = String(minutes).padStart(2, '0');
-  let secondsStr = String(remainingSeconds).padStart(2, '0');
+  let minutesStr = String(minutes).padStart(2, "0");
+  let secondsStr = String(remainingSeconds).padStart(2, "0");
 
   // Return the formatted time string
   return `${minutesStr}:${secondsStr}`;
@@ -17,7 +17,6 @@ function secondsToMinutesSeconds(seconds) {
 // Example usage:
 console.log(secondsToMinutesSeconds(90)); // Output: "01:30"
 console.log(secondsToMinutesSeconds(3660)); // Output: "61:00"
-
 
 // Creating an Audio object to play songs with a default song loaded
 let currentSong = new Audio("./songs/Dynasty%20-%20MIIA_.m4a");
@@ -33,7 +32,10 @@ const playAudio = (track) => {
   currentSong.play();
   // Changing the play button icon to pause
   mainPlayButton.src = "Resources/pause.svg";
-  let songInfo = track.split("/songs/")[1].split("_.m4a")[0].replaceAll("%20", " ");
+  let songInfo = track
+    .split("/songs/")[1]
+    .split("_.m4a")[0]
+    .replaceAll("%20", " ");
   document.querySelector(".song-info").innerHTML = songInfo;
   console.log(document.querySelector(".song-info"));
   document.querySelector(".song-time").innerHTML = "00:00 / 00:00";
@@ -56,10 +58,12 @@ async function getSongs() {
   return songs;
 }
 
+let songs;
+
 // Main function to execute the program
 async function main() {
   // Fetching the list of songs
-  let songs = await getSongs();
+  songs = await getSongs();
   // Logging the list of songs
   console.log(songs);
   // Populating the song list UI with fetched songs
@@ -68,10 +72,12 @@ async function main() {
     .getElementsByTagName("ul")[0];
   for (const song of songs) {
     // Cleaning up song information and appending to the UI
-    let songInfo = song.split("/songs/")[1].split("_.m4a")[0].replaceAll("%20", " ");
+    let songInfo = song
+      .split("/songs/")[1]
+      .split("_.m4a")[0]
+      .replaceAll("%20", " ");
     let [songName, songartist] = songInfo.split(" - ");
-    songUl.innerHTML +=
-      `<li class="justify-space-between">
+    songUl.innerHTML += `<li class="justify-space-between">
         <img src="Resources/song.svg" alt="SongsSVG">
         <div class="info direction-col g-1">
           <span>${songName}</span>
@@ -85,11 +91,12 @@ async function main() {
   }
 
   // Adding click event listeners to each song in the list
-  Array.from(document.querySelector(".song-list > ul").getElementsByTagName("li")).forEach((ele, idx) => {
+  Array.from(
+    document.querySelector(".song-list > ul").getElementsByTagName("li")
+  ).forEach((ele, idx) => {
     ele.addEventListener("click", () => {
       // Playing the selected song on click
       playAudio(songs[idx]);
-      
     });
   });
 
@@ -98,73 +105,132 @@ async function main() {
     playPause();
   });
 
-
   //timeupdate event
   currentSong.addEventListener("timeupdate", () => {
     let currentTime = secondsToMinutesSeconds(currentSong.currentTime);
     let duration = currentSong.duration;
     // Check if duration is a valid number
-    let durationStr = isNaN(duration) ? "00:00" : secondsToMinutesSeconds(duration);
-    document.querySelector(".song-time").innerHTML = `${currentTime} / ${durationStr}`;
+    let durationStr = isNaN(duration)
+      ? "00:00"
+      : secondsToMinutesSeconds(duration);
+    document.querySelector(
+      ".song-time"
+    ).innerHTML = `${currentTime} / ${durationStr}`;
 
-    document.querySelector(".circle").style.left = `${(currentSong.currentTime/currentSong.duration)*100}%`
+    document.querySelector(".circle").style.left = `${
+      (currentSong.currentTime / currentSong.duration) * 100
+    }%`;
 
-    if(currentSong.currentTime > 1)
-      document.querySelector('.circle').style.transition = 'left 0.5s';
+    if (currentSong.currentTime > 1)
+      document.querySelector(".circle").style.transition = "left 0.5s";
     else {
-      document.querySelector('.circle').style.transition = 'left 0.2s';
+      document.querySelector(".circle").style.transition = "left 0.2s";
     }
   });
-  
 
   //seekbar listerner
-  document.querySelector(".seek-bar").addEventListener("click", e=> {
+  document.querySelector(".seek-bar").addEventListener("click", (e) => {
     let position = document.querySelector(".circle");
     console.log(e.offsetX, e.target.getBoundingClientRect());
-    let percentage = (e.offsetX/e.target.getBoundingClientRect().width)*100;
-    position.style.left = percentage + '%';
-    currentSong.currentTime = currentSong.duration * percentage / 100;
-    
-  })
+    let percentage = (e.offsetX / e.target.getBoundingClientRect().width) * 100;
+    position.style.left = percentage + "%";
+    currentSong.currentTime = (currentSong.duration * percentage) / 100;
+  });
 
   //space bar pause play
-  document.addEventListener('keydown', e =>{
-    if(e.key == ' ') {
+  document.addEventListener("keydown", (e) => {
+    if (e.key == " ") {
+      e.preventDefault();
       playPause();
+    } else if (e.key == "m" || e.ket == "M") {
+      e.preventDefault();
+      let volumeVal = document.querySelector("#volume-range").value;
+      console.log(volumeVal);
+      if (volumeVal != 0) {
+        currentSong.volume = 0;
+        document.querySelector("#volume-range").value = 0;
+        volume.src = "Resources/volume_mute.svg";
+      } else {
+        currentSong.volume = 0.7;
+        document.querySelector("#volume-range").value = 70;
+        volume.src = "Resources/volume_high.svg";
+      }
     }
-      
-      
-  })
+  });
 
   //play or pause the song
   function playPause() {
     if (currentSong.paused) {
       currentSong.play();
       mainPlayButton.src = "Resources/pause.svg";
-      console.log('Music Started');
+      console.log("Music Started");
     } else {
       currentSong.pause();
       mainPlayButton.src = "Resources/play.svg";
-      console.log('Music Paused');
+      console.log("Music Paused");
     }
   }
-
-
 
   // event lister for hamberger
   document.querySelector(".hamberger").addEventListener("click", () => {
     document.querySelector(".left").style.left = 0;
-  })
+  });
 
-
-// eventlistner for close btn
+  // eventlistner for close btn
   document.querySelector(".close-icon").addEventListener("click", () => {
     document.querySelector(".left").style.left = "-100%";
-  })
+  });
 
+  //event listerner for prev-btn
+  const prevBtn = document
+    .querySelector(".previous")
+    .addEventListener("click", () => {
+      console.log("previous clicked");
+      let currentSongIndex = songs.indexOf(currentSong.src);
+      if (currentSongIndex == 0) playAudio(songs[songs.length - 1]);
+      else playAudio(songs[currentSongIndex - 1]);
+    });
 
+  //event listerner for next-btn
+  const nextBtn = document
+    .querySelector("#nextButton")
+    .addEventListener("click", () => {
+      console.log("Next button clicked");
+      let currentSongIndex = songs.indexOf(currentSong.src);
+      if (currentSongIndex + 1 == songs.length) playAudio(songs[0]);
+      else playAudio(songs[currentSongIndex + 1]);
+    });
 
+  //skip 10 seconds forward
+  // nextBtn.addEventListener('dblclick', () => {
+  //   currentSong.currentSrc += 10;
+  // })
 
+  // Adding event on volume
+  document.querySelector("#volume-range").addEventListener("change", (e) => {
+    let volumeVal = e.target.value;
+    let vol = volumeVal / 100;
+    console.log(vol);
+    currentSong.volume = vol;
+    if (volumeVal > 50) volume.src = "Resources/volume_high.svg";
+    else if (volumeVal == 0) volume.src = "Resources/volume_mute.svg";
+    else volume.src = "Resources/volume_low.svg";
+  });
+
+  let volume = document.querySelector(".volume-icon");
+  volume.addEventListener("click", (e) => {
+    let volumeVal = document.querySelector("#volume-range").value;
+    console.log(volumeVal);
+    if (volumeVal != 0) {
+      currentSong.volume = 0;
+      document.querySelector("#volume-range").value = 0;
+      volume.src = "Resources/volume_mute.svg";
+    } else {
+      currentSong.volume = 0.7;
+      document.querySelector("#volume-range").value = 70;
+      volume.src = "Resources/volume_high.svg";
+    }
+  });
 }
 
 // Calling the main function to start the program

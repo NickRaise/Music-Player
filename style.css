@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 
+:root {
+    --a: 0;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -146,12 +150,12 @@ a {
 
 .song-buttons {
     position: absolute;
-    /* top: 12px;  */
-    left: 47%; 
+    transform: translateX(50%);
+    right: 50%;
 }
 
 .song-buttons > img {
-    width: 30px;
+    width: 35px;
 }
 
 .song-info, .song-time {
@@ -191,6 +195,10 @@ a {
     display: none;
 }
 
+.satisfy-playlist > h1 {
+    padding: 10px;
+}
+
 .buttons > * {
     margin: 0 12px;
     font-weight: bold;
@@ -228,17 +236,20 @@ a {
 .card {
     width: 200px;
     position: relative;
+    transition: all 0.2s;
 }
 
 .card:hover {
     background-color: #0a0a0a;
+    cursor: pointer;
+    --a: 1;
 }
 
 .play {
     position: absolute;
     top: 170px;
     right: 20px;
-    opacity: 0;
+    opacity: var(--a);
     transition: 0.5s ease;
 }
 
@@ -337,6 +348,7 @@ a {
 
     .play-bar {
         height: auto;
+        bottom: 0;
         width: calc(100vw - 40px);
         left: 50%;
         transform: translateX(-50%);
@@ -353,7 +365,15 @@ a {
 
     .song-buttons {
         position: static;
+        transform: none;
     }
+
+    .time-volume {
+        padding: 0 0 10px 0;
+        gap: 10px;
+    }
+
+
 
     .seek-bar {
         width: calc(100vw - 51px);
